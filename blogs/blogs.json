@@ -1,0 +1,14 @@
+{
+  "repo": "cast-corporation",
+  "feeds": [
+    {
+      "source": "https://cast.app/designer/login",
+      "feed_url": "https://cast.app/designer/login",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-07-20T13:31:34Z"
+}

@@ -1,8 +1,28 @@
 aid: cast-corporation
 name: Cast Corporation
-description: Cast Corporation is a company surfaced as a portfolio company of techstars and added to the
-  API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: 'Cast Corporation (Cast.app) is an AI-agent platform that automates customer
+  success and post-sales revenue operations for B2B SaaS and technology companies.
+  Its autonomous "digital CSM" agents deliver personalized business reviews, grounded
+  answers, onboarding, usage adoption, churn reduction, renewal influence, and referral
+  workflows across email, in-app, and chat in 17 languages. Cast positions itself as
+  an autopilot layer over an existing stack, connecting natively to 60+ systems including
+  Salesforce, HubSpot, Gainsight, Totango, and data warehouses, with customers such as
+  Pure Storage, HPE, and Aruba Networks. Backed by Techstars. Cast does not currently
+  publish a public developer API; this API Evangelist profile captures its identity,
+  security posture, and public developer-adjacent surface.'
 url: https://raw.githubusercontent.com/api-evangelist/cast-corporation/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
+image: https://uploads-ssl.webflow.com/5f3f7b0970b95a4ebfda0084/66bd8a8750ec202866f9fbeb_cast-media.gif
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
@@ -11,9 +31,16 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
 tags:
 - Company
+- Customer Success
+- Artificial Intelligence
+- AI Agents
+- Revenue Operations
+- SaaS
+- Automation
+- Post-Sales
 apis: []
 maintainers:
 - FN: Kin Lane
@@ -23,3 +50,30 @@ maintainers:
 common:
 - type: Website
   url: https://cast.app/
+- type: Documentation
+  url: https://school.cast.app/
+- type: DeveloperPortal
+  url: https://school.cast.app/
+- type: Support
+  url: mailto:support@cast.app
+- type: Pricing
+  url: https://cast.app/pricing.html
+- type: TermsOfService
+  url: https://cast.app/terms-and-conditions.html
+- type: SignUp
+  url: https://cast.app/designer/login
+- type: Blog
+  url: https://cast.app/articles.html
+- type: DomainSecurity
+  url: security/cast-corporation-domain-security.yml
+- type: TrustCenter
+  url: https://school.cast.app/security-documents/
+- type: Compliance
+  url: https://school.cast.app/security-documents/
+- type: LLMsTxt
+  url: llms/cast-corporation-llms.txt
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

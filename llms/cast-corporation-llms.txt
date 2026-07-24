@@ -1,0 +1,27 @@
+# Cast Corporation (Cast.app)
+
+> Cast.app is an AI-agent platform that automates customer success and post-sales
+> revenue operations. Its autonomous agents deliver personalized digital business
+> reviews, grounded answers, onboarding, adoption, renewal-influence, and referral
+> workflows across email, in-app, and chat in 17 languages, connecting natively to
+> 60+ systems including Salesforce, HubSpot, Gainsight, Totango, and data warehouses.
+> This is an API Evangelist network profile; Cast does not publish a public developer API.
+
+## Product
+- Cast.app home: https://cast.app/
+- Pricing: https://cast.app/pricing.html
+- Book a demo: https://cast.app/demo.html
+
+## Docs
+- Help Center / Product docs (Cast School): https://school.cast.app/
+- Articles: https://cast.app/articles.html
+
+## Security & Compliance
+- Security Hub (SOC 2, SOC 3, GDPR, WCAG 2.2 AA): https://school.cast.app/security-documents/
+
+## Legal
+- Terms & Conditions: https://cast.app/terms-and-conditions.html
+
+## Access
+- Cast Designer login: https://cast.app/designer/login
+- Support: support@cast.app

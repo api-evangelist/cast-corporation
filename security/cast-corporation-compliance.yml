@@ -1,0 +1,16 @@
+generated: '2026-07-18'
+method: searched
+source: https://school.cast.app/security-documents/
+url: https://school.cast.app/security-documents/
+programs:
+- name: SOC 2
+  status: attested
+- name: SOC 3
+  status: attested
+- name: GDPR
+  status: compliant
+  statement: Cast GDPR Compliance Statement
+- name: WCAG 2.2 AA
+  status: conformant
+notes: Published compliance posture from the Cast Security Hub. Backs the Compliance
+  rating pointer.

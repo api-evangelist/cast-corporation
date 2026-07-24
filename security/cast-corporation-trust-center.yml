@@ -1,0 +1,25 @@
+generated: '2026-07-18'
+method: searched
+source: https://school.cast.app/security-documents/
+url: https://school.cast.app/security-documents/
+certifications:
+- SOC 2
+- SOC 3
+- GDPR
+- WCAG 2.2 AA
+policies:
+- Vulnerability and Patch Management Policy
+- Encryption and Key Management Policy
+- Access Control and Termination Policy
+- Data Protection Impact Assessments
+evidence:
+- source: https://school.cast.app/security-documents/
+  keywords:
+  - soc 2
+  - soc 3
+  - gdpr
+  - security documents
+notes: Cast publishes a Security Hub ("Security Documents") listing SOC 2 / SOC 3
+  attestation, a GDPR compliance statement, WCAG 2.2 level AA accessibility, and
+  several internal security policies. No public bug-bounty or responsible-disclosure
+  page or dedicated security contact was found; support@cast.app is the general contact.
