@@ -7,21 +7,31 @@ description: 'Cast Corporation (Cast.app) is an AI-agent platform that automates
   workflows across email, in-app, and chat in 17 languages. Cast positions itself as
   an autopilot layer over an existing stack, connecting natively to 60+ systems including
   Salesforce, HubSpot, Gainsight, Totango, and data warehouses, with customers such as
-  Pure Storage, HPE, and Aruba Networks. Backed by Techstars. Cast does not currently
-  publish a public developer API; this API Evangelist profile captures its identity,
-  security posture, and public developer-adjacent surface.'
+  Pure Storage, HPE, and Aruba Networks. Backed by Techstars, Array Ventures, Soma
+  Capital, New York Venture Partners, Leonis Capital, and Comcast NBCUniversal LiftLabs.
+  Cast publishes two documented REST surfaces: a Cast Analytics API for exporting
+  campaign engagement events and summaries, and an In-app Delivery API plus embeddable
+  loader for minting personalized presentation permalinks inside a customer''s own web
+  app. Both are documented in prose only — Cast publishes no OpenAPI, AsyncAPI, GraphQL
+  SDL, or Postman collection.'
 url: https://raw.githubusercontent.com/api-evangelist/cast-corporation/refs/heads/main/apis.yml
 accessModel:
-  pricing: unknown
-  onboarding: unknown
+  pricing: contact-sales
+  onboarding: request
   trial: false
   try_now: false
   public: false
-  label: Unknown
-  confidence: low
-  source: []
-  generated: '2026-07-22'
-  method: derived
+  label: Customer-only API
+  confidence: medium
+  source:
+  - https://cast.app/pricing.html
+  - https://school.cast.app/cast-api/
+  note: >-
+    Annual contracts only, priced by the customer's number of customer accounts; no
+    published prices. The Analytics API key is issued by emailing support@cast.app; the
+    In-app Delivery key is self-serve but only inside an existing Cast Designer tenant.
+  generated: '2026-08-13'
+  method: searched
 image: https://uploads-ssl.webflow.com/5f3f7b0970b95a4ebfda0084/66bd8a8750ec202866f9fbeb_cast-media.gif
 x-type: company
 x-source: vc-portfolio
@@ -31,7 +41,7 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-18'
+modified: '2026-08-13'
 tags:
 - Company
 - Customer Success
@@ -41,7 +51,92 @@ tags:
 - SaaS
 - Automation
 - Post-Sales
-apis: []
+- Analytics
+- Webhooks
+- Embeddable
+apis:
+- name: Cast Analytics API
+  description: >-
+    Read-only REST API for exporting Cast.app campaign performance data — per-campaign
+    engagement summaries, paged engagement events (delivered / view / play / action /
+    feedback) with contact and device detail, the campaign list for a project, and a
+    cross-campaign analytics rollup. Intended for pulling Cast engagement into a BI tool,
+    CRM, or custom dashboard. Tenant-scoped: the organization slug is embedded in the
+    base path and read off the Cast Designer URL.
+  humanURL: https://school.cast.app/cast-api/
+  baseURL: https://cast.app/designer/{org_slug}/api
+  tags:
+  - Analytics
+  - Customer Success
+  - Reporting
+  - Events
+  properties:
+  - type: Documentation
+    url: https://school.cast.app/cast-api/
+  - type: APIReference
+    url: https://school.cast.app/cast-api/
+  - type: Authentication
+    url: authentication/cast-corporation-authentication.yml
+  - type: Conventions
+    url: conventions/cast-corporation-conventions.yml
+  - type: ErrorCatalog
+    url: errors/cast-corporation-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/cast-corporation-rate-limits.yml
+  - type: DataModel
+    url: data-model/cast-corporation-data-model.yml
+  - type: Webhooks
+    url: asyncapi/cast-corporation-webhooks.yml
+  x-evidence:
+    verified: '2026-08-13'
+    docs_status: 200
+    docs_finding: >-
+      Reference page documents four endpoints with paths, path/query parameters, the
+      Authorization header, and full example JSON responses.
+    spec_published: false
+    note: >-
+      API key issuance is by email to support@cast.app, so no unauthenticated call to
+      this base was possible; the sibling In-app Delivery endpoint on the same host was
+      probed live and returned 401.
+- name: Cast In-app Delivery API
+  description: >-
+    Server-side endpoint for minting a personalized Cast presentation permalink for one
+    contact in one project, in play (automated presentation), ama (Ask Me Anything),
+    information (customer center), or page (website page) mode. Paired with the
+    cast-inapp-loader.js client that renders the same experience as a floating launcher,
+    an iframe, or a link inside the customer's own site. Used to drop personalized
+    business reviews into emails, CRM records, support tickets, and customer portals.
+  humanURL: https://school.cast.app/projects/campaigns-and-analytics/in-app-delivery/
+  baseURL: https://cast.app/designer/api/v1
+  tags:
+  - Embeddable
+  - Personalization
+  - Presentations
+  - Customer Experience
+  properties:
+  - type: Documentation
+    url: https://school.cast.app/projects/campaigns-and-analytics/in-app-delivery/
+  - type: APIReference
+    url: https://school.cast.app/projects/campaigns-and-analytics/in-app-delivery/
+  - type: Authentication
+    url: authentication/cast-corporation-authentication.yml
+  - type: Components
+    url: components/cast-corporation-components.yml
+  - type: SourceCode
+    url: https://github.com/cast-corp/delivery-react-example
+  - type: Demo
+    url: https://cast-corp.github.io/delivery-react-example
+  x-evidence:
+    verified: '2026-08-13'
+    docs_status: 200
+    endpoint_probe:
+      url: https://cast.app/designer/api/v1/permalink
+      method: POST
+      unauthenticated_status: 401
+    finding: >-
+      Endpoint is live and enforces the documented bearer scheme. A first-party React
+      reference implementation calls the same URL.
+    spec_published: false
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -54,8 +149,16 @@ common:
   url: https://school.cast.app/
 - type: DeveloperPortal
   url: https://school.cast.app/
+- type: APIReference
+  url: https://school.cast.app/cast-api/
+- type: GettingStarted
+  url: https://school.cast.app/getting-started/
+- type: GitHubOrganization
+  url: https://github.com/cast-corp
 - type: Support
   url: mailto:support@cast.app
+- type: Community
+  url: https://castcommunity.slack.com/join/shared_invite/zt-xd5ge8yq-sNtPTAXPaSKb0RXMUIAOvA
 - type: Pricing
   url: https://cast.app/pricing.html
 - type: TermsOfService
@@ -70,10 +173,40 @@ common:
   url: https://school.cast.app/security-documents/
 - type: Compliance
   url: https://school.cast.app/security-documents/
+- type: Conformance
+  url: conformance/cast-corporation-conformance.yml
 - type: LLMsTxt
   url: llms/cast-corporation-llms.txt
+- type: Authentication
+  url: authentication/cast-corporation-authentication.yml
+- type: Conventions
+  url: conventions/cast-corporation-conventions.yml
+- type: ErrorCatalog
+  url: errors/cast-corporation-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/cast-corporation-lifecycle.yml
+- type: DataModel
+  url: data-model/cast-corporation-data-model.yml
+- type: Webhooks
+  url: asyncapi/cast-corporation-webhooks.yml
+- type: Components
+  url: components/cast-corporation-components.yml
+- type: Packages
+  url: packages/cast-corporation-packages.yml
+- type: SDKs
+  url: packages/cast-corporation-packages.yml
+- type: Plans
+  url: plans/cast-corporation-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/cast-corporation-rate-limits.yml
+- type: SLA
+  url: https://school.cast.app/security-docs/service-level-agreement/
 x-enrichment:
-  date: '2026-07-19'
-  status: backfilled
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 13
   pass: local-v1
-  note: backfilled from .gitignore signal + verified work evidence
+  note: >-
+    Contract discovery found two real, documented, live REST surfaces that the prior
+    round missed. No machine-readable spec exists: no OpenAPI/Swagger/GraphQL/AsyncAPI/
+    Postman on any host, no /.well-known/* document, no agent card, and no MCP server.
