@@ -1,0 +1,95 @@
+generated: '2026-08-13'
+method: searched
+source: https://school.cast.app/projects/campaigns-and-analytics/in-app-delivery/
+note: >-
+  Cast's primary developer-facing surface is not a server SDK - it is an embeddable
+  client-side experience. A single loader script exposes a CastInApp.init() contract that
+  renders the personalized presentation, chat, and AMA experience inside a customer's own
+  site or web app.
+loaders:
+- name: cast-inapp-loader.js
+  url: https://cast.app/cast-inapp-loader.js
+  distribution: cdn
+  pinned: false
+  global: CastInApp
+  entrypoint: CastInApp.init(config)
+  status: 200
+  content_type: application/javascript
+  size_bytes: 7498
+  probed: '2026-08-13'
+  note: >-
+    Served unversioned from the application host. A consumer cannot pin a build - the
+    script always floats to whatever Cast is currently shipping.
+families:
+- family: Icon Launcher
+  description: >-
+    Floating launcher icon on the customer's site; clicking opens a popup with the
+    visitor's personalized cast experience.
+  variants:
+  - name: Chat-first experience
+    castType: ama
+    description: Opens straight into a conversation; slides surface as they are discussed.
+  - name: Presentation-first experience
+    castType: play
+    description: Plays the presentation immediately; the visitor can interrupt to ask questions.
+  configuration_surface: Project Settings -> In-App Configuration (icon, popup attention message, reappearance)
+- family: Embeds
+  description: Place the experience in the customer's own page or open it in a new tab.
+  variants:
+  - name: Presentation Link
+    castMode: link
+    description: A link or button that opens the personalized presentation in a new tab.
+  - name: Presentation Iframe
+    castMode: iframe
+    description: Embeds the presentation inside a section of the page (portals, account pages, dashboards).
+- family: Developer Integrations
+  description: Server-side and framework integrations for deeper embedding.
+  variants:
+  - name: cURL / permalink
+    description: Generate a personalized link server-side via POST /designer/api/v1/permalink.
+    api: https://cast.app/designer/api/v1/permalink
+  - name: React
+    description: Working React example using a useCastLink hook against the permalink endpoint.
+    source: https://github.com/cast-corp/delivery-react-example
+    demo: https://cast-corp.github.io/delivery-react-example
+parameters:
+  common:
+  - name: castMode
+    values: [widget, link, iframe]
+    description: Which embed style to render.
+  - name: castType
+    values: [play, ama, information, page]
+    description: Which experience to load.
+  - name: apiKey
+    description: In-app delivery API key, generated in Cast Designer.
+  - name: projectId
+    description: The project (cast) ID the snippet is bound to.
+  - name: contactId
+    description: The contact whose personalized cast is shown; substituted at runtime.
+  - name: fallbackContactId
+    description: Contact to fall back to when contactId has no matching campaign.
+  - name: castHostname
+    description: The Cast host the loader talks to.
+  - name: identifier
+    description: DOM element id the loader binds to (castWidget1 / castIframe1 / castLink1).
+  - name: startPoint
+    description: Optional Navigation Path ID to deep-link the presentation into a section.
+  - name: defaultTab
+    values: [play, ama, information, page]
+  - name: showAmaTab
+    type: boolean
+  - name: showHubPage
+    type: boolean
+  - name: showInfoPage
+    type: boolean
+  icon_launcher_only:
+  - name: customIcon
+    description: URL of the custom launcher icon (32x32, transparent SVG preferred).
+  - name: chatPosition
+    values: [left, right]
+  - name: backgroundColor
+key_handling:
+  note: >-
+    Cast documents the in-app delivery key as safe to expose in client-side embed code;
+    it only resolves a permalink for a contact in a published campaign. Regenerating the
+    key immediately invalidates every deployed snippet.

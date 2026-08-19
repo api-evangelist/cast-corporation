@@ -1,0 +1,57 @@
+generated: '2026-08-13'
+method: searched
+source: https://cast.app/pricing.html
+note: >-
+  Cast publishes a pricing page with two named tiers and an explicit pricing MODEL, but
+  no prices, no quotas and no overage rates. Everything commercial resolves to "book a
+  demo". API access is not a priced line item on either tier - the Analytics API key is
+  issued by support on request, and the In-app Delivery key is self-serve inside the
+  product.
+model:
+  basis: number of the customer's own customer accounts
+  not_per_seat: true
+  rationale: >-
+    Cast prices by the scale of the customer's ecosystem rather than by CSM seats,
+    because the agents interact with the customer's customers and partners rather than
+    with internal teams.
+  contract_terms: annual contracts only; multi-year available with volume-based pricing
+  pilots: paid pilots available to validate specific use cases
+  implementation_fee: included at no additional charge for annual plans
+  time_to_value: first version typically ready in 7 days; full rollout typically 2-3 weeks
+plan_count: 2
+plans:
+- name: Startup
+  price: null
+  currency: null
+  period: annual
+  public_price: false
+  eligibility: fewer than 25 employees or under $5M ARR
+  included_quota: not published
+  overage: not published
+  support: Email + AI Chat
+  limits: not published
+- name: Enterprise
+  price: null
+  currency: null
+  period: annual
+  public_price: false
+  eligibility: no stated cap
+  included_quota: not published
+  overage: not published
+  support: Email + AI Chat, plus Live Chat + Phone Support
+  limits: not published
+api_access:
+  metered: false
+  priced_separately: false
+  note: >-
+    No API-specific plan, quota or price is published. The Analytics API key is obtained
+    by emailing support@cast.app; the In-app Delivery key is generated in the Designer UI
+    by any customer with a project.
+signup:
+  self_serve: false
+  path: https://cast.app/demo.html
+  login: https://cast.app/designer/login
+x-evidence:
+  fetched: '2026-08-13'
+  url: https://cast.app/pricing.html
+  http_status: 200

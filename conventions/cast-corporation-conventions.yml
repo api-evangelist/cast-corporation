@@ -1,0 +1,118 @@
+generated: '2026-08-13'
+method: searched
+source: https://school.cast.app/cast-api/
+docs:
+- https://school.cast.app/cast-api/
+- https://school.cast.app/projects/campaigns-and-analytics/in-app-delivery/
+note: >-
+  Cross-cutting semantics transcribed from Cast's two published API reference pages.
+  Cast publishes no machine-readable spec, so nothing here is derived from OpenAPI.
+  Where a convention is simply not documented, it is recorded as null/false rather than
+  assumed.
+transport:
+  protocol: REST over HTTPS
+  formats:
+  - application/json
+  hosts:
+  - https://cast.app
+authentication:
+  style: api-key-in-authorization-header
+  variants:
+  - raw key (Analytics API)
+  - Bearer token (In-app Delivery API)
+  artifact: authentication/cast-corporation-authentication.yml
+tenancy:
+  style: path-embedded tenant slug
+  pattern: /designer/{org_slug}/api/...
+  note: >-
+    The Analytics API is tenant-scoped in the path. The In-app Delivery API is not -
+    /designer/api/v1/permalink is tenant-neutral and resolves the tenant from the key.
+idempotency:
+  supported: false
+  documented: false
+  header: null
+  note: >-
+    No idempotency key, no retry-safety contract, and no de-duplication guarantee is
+    documented on either surface. The Analytics endpoints are read-only GETs, which are
+    naturally idempotent, but the POST /permalink endpoint has no documented idempotency
+    contract. No Idempotency pointer is wired in apis.yml.
+pagination:
+  supported: true
+  style: page-number
+  applies_to:
+  - GET /cast/{cast_id}/generation/{generation_id}/analytics_events
+  request_params:
+  - name: page
+    default: 1
+  - name: page_size
+    default: 50
+  response_fields:
+  - count
+  - page
+  - page_size
+  - results
+  cursor: false
+  link_header: false
+  note: >-
+    Only the analytics_events endpoint documents pagination. The campaign list endpoint
+    returns a bare JSON array with no envelope and no pagination parameters.
+filtering:
+  supported: true
+  params:
+  - name: event_type
+    required: true
+    on: analytics_events
+    values: [delivered, view, play, action, feedback]
+  - name: show_totals
+    required: false
+    on: cross_campaign_analytics_summary
+    default: true
+response_envelopes:
+- endpoint: analytics
+  shape: object
+  keys: [summary, timeline, scenes_watched, actions_clicked, feedbacks, user_agents, languages]
+- endpoint: analytics_events
+  shape: paged-object
+  keys: [count, page, page_size, results]
+- endpoint: generation
+  shape: bare-array
+  keys: []
+- endpoint: cross_campaign_analytics_summary
+  shape: map-keyed-by-campaign-id
+  keys: []
+- endpoint: permalink
+  shape: plain-text
+  keys: []
+  note: The permalink endpoint returns a single URL string, not JSON.
+field_expansion:
+  supported: false
+  documented: false
+metadata:
+  supported: false
+  documented: false
+request_tracing:
+  request_id_header: null
+  documented: false
+versioning:
+  scheme: mixed
+  detail: >-
+    The In-app Delivery API carries an explicit /v1 path segment. The Analytics API is
+    unversioned - endpoints hang directly off /designer/{org_slug}/api. No version
+    header, no date-pinning, and no published version policy.
+  artifact: lifecycle/cast-corporation-lifecycle.yml
+error_envelope:
+  format: undocumented
+  rfc9457: false
+  content_type: not documented
+  note: >-
+    No error catalogue, no problem+json, no documented error body. The only documented
+    failure is the client-side message "API key is invalid".
+  artifact: errors/cast-corporation-problem-types.yml
+rate_limit_signaling:
+  headers: []
+  documented: false
+  artifact: rate-limits/cast-corporation-rate-limits.yml
+webhooks:
+  supported: true
+  name: Advanced Endpoints
+  artifact: asyncapi/cast-corporation-webhooks.yml

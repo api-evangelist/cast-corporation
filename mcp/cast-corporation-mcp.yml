@@ -1,0 +1,76 @@
+generated: '2026-08-13'
+method: derived
+status: candidate
+source: https://school.cast.app/cast-api/
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: api-key
+  verified: probed
+note: >-
+  Cast Corporation does NOT ship an MCP server. Its own llms.txt states that Cast.app
+  "supports open agent protocols including MCP, A2A, ACP" - that is a claim about what
+  Cast's agents can CONSUME inside a customer deployment, not a server a client can
+  connect to. Every probe for a hosted endpoint missed and no package exists, so no
+  MCPServer pointer is wired in apis.yml; the tools below are an API-Evangelist-derived
+  CANDIDATE mapped from Cast's four documented Analytics API operations plus the In-app
+  Delivery permalink operation. Do not read this file as a Cast-published agent surface.
+probes:
+- url: https://cast.app/mcp
+  status: 404
+- url: https://school.cast.app/mcp
+  status: 404
+- host: mcp.cast.app
+  dns: NXDOMAIN
+- url: https://cast.app/.well-known/oauth-protected-resource
+  status: 404
+- url: https://cast.app/.well-known/oauth-authorization-server
+  status: 404
+- registry: npm
+  query: cast.app / castapp
+  first_party_mcp_packages: 0
+claims:
+- claim: Supports MCP, A2A, ACP and A2H/H2A handoffs.
+  source: https://cast.app/llms.txt
+  interpretation: >-
+    Product capability of Cast's own agents (they can talk to other agents and tools).
+    No hosted MCP server, no stdio package, no tool manifest published.
+server:
+  name: cast-corporation
+  transport: null
+  url: null
+tools:
+- name: get_campaign_analytics_summary
+  description: Retrieve the analytics summary for one cast and one campaign (generation).
+  source_operation: GET /designer/{org_slug}/api/cast/{cast_id}/generation/{generation_id}/analytics
+  docs: https://school.cast.app/cast-api/
+  confidence: high
+- name: list_campaign_analytics_events
+  description: >-
+    Page through engagement events for one cast and campaign, filtered by event type
+    (delivered, view, play, action, feedback).
+  source_operation: GET /designer/{org_slug}/api/cast/{cast_id}/generation/{generation_id}/analytics_events
+  docs: https://school.cast.app/cast-api/
+  confidence: high
+- name: list_campaigns
+  description: List the campaigns (generations) for one project.
+  source_operation: GET /designer/{org_slug}/api/cast/{cast_id}/generation
+  docs: https://school.cast.app/cast-api/
+  confidence: high
+- name: get_cross_campaign_analytics
+  description: Fetch an analytics summary across every campaign in a project.
+  source_operation: GET /designer/{org_slug}/api/cast/{cast_id}/cross_campaign_analytics_summary
+  docs: https://school.cast.app/cast-api/
+  confidence: high
+- name: create_presentation_permalink
+  description: >-
+    Generate a personalized presentation permalink for one contact in one project, in
+    play / ama / information / page mode.
+  source_operation: POST /designer/api/v1/permalink
+  docs: https://school.cast.app/projects/campaigns-and-analytics/in-app-delivery/
+  confidence: high
+  note: >-
+    Write operation with no documented idempotency contract; a server implementing this
+    tool should treat repeat calls as potentially link-minting.

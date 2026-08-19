@@ -1,0 +1,42 @@
+generated: '2026-08-13'
+method: probed
+source: https://school.cast.app/cast-api/
+note: >-
+  Cast publishes no error reference, no error-code registry and no problem+json schema.
+  This catalogue records only what is documented on the reference pages plus what a live
+  unauthenticated probe actually returned. Empty is the honest answer for most of it.
+format: undocumented
+rfc9457: false
+problem_count: 2
+problems:
+- status: 401
+  title: Unauthorized
+  detail: Request carried no valid API key.
+  source_operation: POST https://cast.app/designer/api/v1/permalink
+  evidence:
+    method: probed
+    url: https://cast.app/designer/api/v1/permalink
+    unauthenticated_status: 401
+    fetched: '2026-08-13'
+- status: 401
+  title: API key is invalid
+  detail: >-
+    Documented client-facing failure for the In-app Delivery embed - raised when the
+    delivery key was regenerated after the snippet was pasted, so the embedded apiKey no
+    longer matches. Remediation is to copy the current key from Campaigns & Analytics ->
+    In-app Delivery and update the snippet.
+  source_operation: In-app Delivery loader (CastInApp.init)
+  evidence:
+    method: searched
+    url: https://school.cast.app/projects/campaigns-and-analytics/in-app-delivery/
+gaps:
+- No documented 4xx/5xx response bodies on any Analytics API endpoint.
+- No machine-readable error type registry or error-code namespace.
+- No documented Retry-After or throttling response.
+- >-
+  Product-level failure states exist (campaign status FAILED, error_message on the
+  campaign object) but they are data fields, not API error semantics.
+non_api_error_surface:
+- field: error_message
+  on: campaign object (GET /cast/{PROJECT_ID}/generation)
+  meaning: Free-text error message attached to a campaign whose status is FAILED.

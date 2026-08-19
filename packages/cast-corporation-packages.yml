@@ -1,0 +1,84 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  npm registry search, PyPI, GitHub org github.com/cast-corp, and the Cast in-app
+  delivery documentation
+note: >-
+  Cast Corporation publishes NO client library to any package registry. Searched npm
+  (text "cast.app", "castapp"), PyPI (cast-app, castapp) - no first-party result.
+  (@castapp/cli on npm belongs to an unrelated "Cast community platform" and is NOT this
+  company.) Cast's only first-party distributed client artifact is the CDN-hosted in-app
+  delivery loader, plus a reference React integration published as source on GitHub.
+registries_searched:
+- registry: npm
+  query: cast.app
+  first_party_results: 0
+- registry: npm
+  query: castapp
+  first_party_results: 0
+  note: '@castapp/cli 0.0.1 matched but is a different company.'
+- registry: pypi
+  package: cast-app
+  status: 404
+- registry: pypi
+  package: castapp
+  status: 404
+package_count: 1
+packages:
+- language: javascript
+  registry: cdn
+  name: cast-inapp-loader.js
+  url: https://cast.app/cast-inapp-loader.js
+  install: '<script type="text/javascript" src="https://cast.app/cast-inapp-loader.js"></script>'
+  official: true
+  version: null
+  published: null
+  note: >-
+    Unpinned CDN distribution. The script tag Cast publishes carries no version segment
+    and no integrity hash, and there is no registry metadata endpoint to query - so
+    neither we nor a consumer can tell which build they are loading. Probed 2026-08-13,
+    HTTP 200, application/javascript, 7,498 bytes.
+  docs: https://school.cast.app/projects/campaigns-and-analytics/in-app-delivery/
+source_repositories:
+- name: delivery-react-example
+  url: https://github.com/cast-corp/delivery-react-example
+  language: javascript
+  official: true
+  kind: reference-implementation
+  packaged: false
+  version: null
+  published: '2026-08-01'
+  note: >-
+    First-party React example (a useCastLink hook calling POST /designer/api/v1/permalink).
+    Published as source only - not on npm, no releases, no tags. Date is the last push to
+    main. Live demo at https://cast-corp.github.io/delivery-react-example.
+- name: windmill-react-ui
+  url: https://github.com/cast-corp/windmill-react-ui
+  official: false
+  kind: fork
+  note: Fork of an upstream OSS component library; not a Cast client.
+- name: glide-data-grid
+  url: https://github.com/cast-corp/glide-data-grid
+  official: false
+  kind: fork
+  note: Fork of an upstream OSS data grid; not a Cast client.
+- name: to-words
+  url: https://github.com/cast-corp/to-words
+  official: false
+  kind: fork
+  note: Fork of an upstream number-to-words library; not a Cast client.
+- name: svg-performance-review
+  url: https://github.com/cast-corp/svg-performance-review
+  official: true
+  kind: internal
+  packaged: false
+  note: Cast-authored repo with no description; not a client library for the Cast API.
+github_organization:
+  url: https://github.com/cast-corp
+  public_repos: 5
+  first_party_repos: 2
+  fork_repos: 3
+  probed: '2026-08-13'
+  note: >-
+    first_party_repos counts Cast-authored repos (delivery-react-example,
+    svg-performance-review); the other three are forks of upstream OSS projects.

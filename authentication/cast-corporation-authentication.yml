@@ -1,0 +1,79 @@
+generated: '2026-08-13'
+method: searched
+source: https://school.cast.app/cast-api/
+docs:
+- https://school.cast.app/cast-api/
+- https://school.cast.app/projects/campaigns-and-analytics/in-app-delivery/
+- https://school.cast.app/sso-setup-guide/
+note: >-
+  Cast publishes no OpenAPI, so this profile is transcribed from the two published API
+  reference pages rather than derived from securitySchemes. Two distinct API keys exist
+  and they are NOT interchangeable: the Analytics API key is issued by Cast support on
+  request, the In-app Delivery key is self-serve from the Cast Designer UI.
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+  oauth2_flows: []
+  oauth2: false
+  openid_connect: false
+  mtls: false
+schemes:
+- name: analytics-api-key
+  type: apiKey
+  in: header
+  parameter_name: Authorization
+  scheme_format: raw-key
+  description: >-
+    The Cast Analytics API takes the raw API key as the value of the Authorization
+    header, with no "Bearer" prefix. Documented example - "Authorization: your_api_key".
+  issuance: >-
+    Requested by emailing support@cast.app. Not self-serve.
+  applies_to:
+  - https://cast.app/designer/{org_slug}/api
+  source: https://school.cast.app/cast-api/
+- name: inapp-delivery-bearer
+  type: http
+  scheme: bearer
+  in: header
+  parameter_name: Authorization
+  description: >-
+    The In-app Delivery permalink endpoint takes a bearer token -
+    "Authorization: Bearer <api_key>".
+  issuance: >-
+    Self-serve. Generated (and regenerated) from Campaigns & Analytics -> In-app
+    Delivery in the Cast Designer. Regeneration immediately invalidates the prior key.
+  exposure: >-
+    Cast documents this key as safe to expose in client-side embed code - it can only
+    resolve a permalink for a contact in a published campaign. It is still a credential;
+    the analytics key is not client-safe.
+  applies_to:
+  - https://cast.app/designer/api/v1
+  source: https://school.cast.app/projects/campaigns-and-analytics/in-app-delivery/
+tenancy:
+  org_slug_required: true
+  note: >-
+    The Analytics API path embeds the tenant - https://cast.app/designer/{org_slug}/api -
+    so the key is scoped to one organization. org_slug, cast_id (project) and
+    generation_id (campaign) are read off the Designer URL, not from a discovery endpoint.
+platform_sso:
+  protocol: SAML 2.0
+  scope: Cast Designer console sign-in (not API authentication)
+  identity_providers:
+  - Okta
+  - Microsoft Entra ID
+  - Google Workspace
+  docs: https://school.cast.app/sso-setup-guide/
+x-evidence:
+  fetched: '2026-08-13'
+  checks:
+  - url: https://cast.app/designer/api/v1/permalink
+    method: POST
+    unauthenticated_status: 401
+    finding: >-
+      Endpoint is live and rejects unauthenticated requests, confirming the documented
+      bearer scheme is enforced.
+  - url: https://school.cast.app/llms-full.txt
+    status: 200
+    finding: Full documentation text, including both API reference pages, is machine-readable.

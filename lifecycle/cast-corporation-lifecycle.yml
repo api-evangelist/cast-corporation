@@ -1,0 +1,73 @@
+generated: '2026-08-13'
+method: searched
+source: https://school.cast.app/security-docs/service-level-agreement/
+versioning:
+  scheme: mixed
+  current: v1
+  detail: >-
+    In-app Delivery is explicitly versioned at /designer/api/v1. The Analytics API is
+    unversioned. No published API versioning policy.
+  docs: https://school.cast.app/cast-api/
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    No API deprecation policy, no Sunset/Deprecation header support (RFC 8594), and no
+    published notice period. No Deprecation pointer is wired in apis.yml.
+sla:
+  url: https://school.cast.app/security-docs/service-level-agreement/
+  uptime_target: 99.9%
+  measurement: >-
+    Monthly Uptime Percentage, measured in continuous 1-minute periods by a third-party
+    monitoring service contracted by Cast Corporation.
+  remedy: Service Credit against the customer account.
+  support_hours: 9am-6pm Eastern European Time, unless the contract adds out-of-hours cover.
+  response_times:
+  - severity: Fatal
+    definition: Complete degradation - all users and critical functions affected.
+    respond_within: 2 hours
+  - severity: Severe
+    definition: Significant degradation - a large number of users or critical functions affected.
+    respond_within: 4 hours
+  - severity: Medium
+    definition: Limited degradation - limited number of users or functions affected.
+    respond_within: 8 hours
+  - severity: Minor
+    definition: Small degradation - few users or one user affected.
+    respond_within: 1 day
+  resolution_targets:
+  - severity: Fatal
+    fix_within: ASAP or up to 1 day
+  - severity: Severe
+    fix_within: up to 3 days
+  - severity: Medium
+    fix_within: within 1 week
+  - severity: Minor
+    fix_within: within 2 weeks
+  resolution_guaranteed: false
+status_page:
+  url: null
+  published: false
+  probes:
+  - url: https://status.cast.app/
+    status: 0
+    finding: Host does not resolve.
+  - url: https://cast.app/status
+    status: 404
+  note: >-
+    Cast commits to a 99.9% SLA measured by a third-party monitor but publishes no
+    customer-facing status page. No StatusPage pointer is wired in apis.yml.
+changelog:
+  url: null
+  published: false
+  note: >-
+    No dated API or product changelog was found on cast.app or school.cast.app. The
+    documentation site carries a "Last updated" date on llms.txt (2026-08-11) but no
+    entry-by-entry history.
+deprecated_operations: []
+subprocessors:
+  url: https://school.cast.app/security-docs/subprocessors/
+  last_updated: '2025-10-01'
+  note: Change-notice surface for third-party AI and infrastructure providers.

@@ -1,0 +1,38 @@
+generated: '2026-08-13'
+method: searched
+source: https://school.cast.app/cast-api/
+note: >-
+  Cast publishes no rate limits for either API surface. The two reference pages document
+  authentication, paths, parameters and example responses but say nothing about request
+  ceilings, windows, burst allowances, throttling status codes or rate-limit response
+  headers. The only rate-limit language anywhere in the documentation refers to THIRD-PARTY
+  services Cast consumes on the customer's behalf (web-scraping and connector service
+  limits), not to Cast's own API. Recorded as an honest zero.
+limit_count: 0
+limits: []
+headers:
+  documented: []
+  observed: []
+  note: >-
+    No X-RateLimit-* / RateLimit-* / Retry-After headers are documented, and no
+    unauthenticated 200 response is available to observe headers on - the permalink
+    endpoint answers 401 without a key.
+exhaustion:
+  status_code: null
+  retry_after: null
+  documented: false
+pagination_ceiling:
+  endpoint: GET /designer/{org_slug}/api/cast/{cast_id}/generation/{generation_id}/analytics_events
+  param: page_size
+  default: 50
+  maximum: not published
+  note: >-
+    page_size is the only documented request-shaping control. The reference shows
+    page_size=200 in an example without stating a maximum, so the ceiling is unknown.
+x-evidence:
+- url: https://school.cast.app/cast-api/
+  status: 200
+  finding: Full reference text contains no rate-limit section.
+- url: https://cast.app/designer/api/v1/permalink
+  status: 401
+  finding: Unauthenticated POST returns 401 with no rate-limit headers to record.

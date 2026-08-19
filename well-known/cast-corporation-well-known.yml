@@ -1,0 +1,42 @@
+generated: '2026-08-13'
+method: probed
+source: live GET probes of every Cast.app host named in apis.yml
+note: >-
+  Every /.well-known/ path probed on both the marketing/API host (cast.app) and the
+  documentation host (school.cast.app) returned 404. No WellKnown or SecurityTxt
+  pointer is wired in apis.yml — this file records a verified ABSENCE, not a surface.
+hosts:
+- host: https://cast.app
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://school.cast.app
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+related:
+  robots_txt:
+    url: https://cast.app/robots.txt
+    status: 200
+    sitemap: https://cast.app/file/sitemap.xml
+  llms_txt:
+    url: https://cast.app/llms.txt
+    status: 200
+    content_type: text/plain
+    file: ../llms/cast-corporation-llms.txt

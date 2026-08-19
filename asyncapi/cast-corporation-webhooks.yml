@@ -1,0 +1,68 @@
+generated: '2026-08-13'
+method: searched
+source: https://school.cast.app/projects/project-settings/
+spec_type: none
+asyncapi_published: false
+note: >-
+  Cast publishes no AsyncAPI document. It does document a real outbound event surface -
+  "Advanced Endpoints" in Project Settings - which pushes presentation engagement events
+  to a customer-configured HTTPS endpoint in realtime. The event vocabulary below is the
+  same one the Analytics API exposes as the event_type query parameter, so it is
+  provider-published rather than inferred. Configuration is UI-only; there is no
+  documented subscription API.
+surface:
+  name: Advanced Endpoints
+  kind: outbound-webhook
+  configuration: >-
+    Cast Designer -> Project Settings -> Advanced Settings -> Advanced Endpoints.
+    Configure an endpoint URL, subscribe to the events you want, and select additional
+    fields to include in the payload.
+  delivery: realtime push as customers watch cast presentations and take actions
+  scope: per project (cast)
+  docs: https://school.cast.app/projects/project-settings/
+  management_api: false
+  signing: undocumented
+  retry_policy: undocumented
+  payload_schema: undocumented
+events:
+- name: delivered
+  description: The cast was delivered to the contact.
+  source: analytics event_type vocabulary
+- name: view
+  description: The cast was opened by the contact.
+  source: analytics event_type vocabulary
+- name: play
+  description: The cast presentation was played.
+  source: analytics event_type vocabulary
+- name: action
+  description: A recommendation / call-to-action was clicked.
+  source: analytics event_type vocabulary
+- name: feedback
+  description: The contact submitted feedback (CSAT / NPS / CES / PSAT).
+  source: analytics event_type vocabulary
+payload_fields_observed:
+  note: >-
+    Field set documented for the Analytics API analytics_events response. Advanced
+    Endpoints payloads are described as carrying the event plus "additional fields you
+    select", but the exact payload schema is not published.
+  fields:
+  - event_at
+  - event_type
+  - ip_address
+  - contact_id
+  - contact_email
+  - contact_name
+  - contact_phone
+  - device_type
+  - os_name
+  - browser_name
+  - status
+pull_alternative:
+  endpoint: GET https://cast.app/designer/{org_slug}/api/cast/{cast_id}/generation/{generation_id}/analytics_events
+  docs: https://school.cast.app/cast-api/
+  note: The same events are retrievable by polling the Analytics API with event_type.
+gaps:
+- No AsyncAPI or JSON Schema for the event payload.
+- No documented webhook signature / verification mechanism.
+- No documented retry or delivery-guarantee semantics.
+- No API to register or list endpoints - configuration is UI-only.

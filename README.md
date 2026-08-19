@@ -42,6 +42,36 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Cast Corporation is a company surfaced as a portfolio company of techstars and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+Cast Corporation (Cast.app) is an AI-agent platform that automates customer success and post-sales
+revenue operations for B2B technology companies. This profile covers the two REST surfaces Cast
+publicly documents:
 
-Backed by: techstars — https://cast.app/
+- **[Cast Analytics API](https://school.cast.app/cast-api/)** — read-only export of campaign
+  engagement summaries, paged engagement events, the campaign list for a project, and a
+  cross-campaign rollup. Base: `https://cast.app/designer/{org_slug}/api`.
+- **[Cast In-app Delivery API](https://school.cast.app/projects/campaigns-and-analytics/in-app-delivery/)**
+  — `POST /designer/api/v1/permalink` mints a personalized presentation link for one contact, paired
+  with the `cast-inapp-loader.js` embeddable launcher / iframe / link components and a first-party
+  [React example](https://github.com/cast-corp/delivery-react-example).
+
+### Not published by Cast
+
+Recorded so absence reads as deliberate rather than unexamined. Probed 2026-08-13:
+
+- **No machine-readable specification.** No OpenAPI, Swagger, GraphQL SDL, AsyncAPI, JSON Schema or
+  Postman collection on the API host, the docs host, or the GitHub org. Both APIs are documented in
+  HTML prose only.
+- **No `/.well-known/` surface.** `security.txt`, `openid-configuration`, `oauth-authorization-server`,
+  `oauth-protected-resource`, `api-catalog`, `ai-plugin.json`, `agent-card.json` and `agent.json` all
+  return 404 on `cast.app` and `school.cast.app`.
+- **No MCP server and no A2A agent card.** Cast's own `llms.txt` says the platform "supports open
+  agent protocols including MCP, A2A, ACP" — that is what Cast's agents consume, not a server or card
+  a client can reach.
+- **No status page, no deprecation policy, no changelog, no published rate limits, no SDK on any
+  package registry.** Cast does commit to a 99.9% uptime SLA with severity-banded response times.
+
+Cast **does** publish a substantial first-party `llms.txt` (13KB, self-dated 2026-08-11), captured
+verbatim in `llms/`.
+
+Backed by: Techstars, Array Ventures, Soma Capital, New York Venture Partners, Leonis Capital,
+Comcast NBCUniversal LiftLabs — https://cast.app/

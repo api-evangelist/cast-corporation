@@ -1,0 +1,86 @@
+generated: '2026-08-13'
+method: searched
+source: https://school.cast.app/security-documents/
+note: >-
+  Cross-cutting standards posture. Compliance attestations are provider-published on the
+  Cast Security Hub; API-level standards are read from the two published reference pages
+  (Cast ships no OpenAPI, so nothing here is derived from a spec).
+standards:
+- id: soc2-type-ii
+  conforms: true
+  evidence: >-
+    SOC 2 Type II attestation published on the Cast Security Hub and restated on the
+    pricing FAQ.
+  source: https://school.cast.app/security-documents/
+- id: soc3
+  conforms: true
+  evidence: SOC 3 report published on the Cast Security Hub.
+  source: https://school.cast.app/security-documents/
+- id: gdpr
+  conforms: true
+  evidence: >-
+    Cast GDPR Compliance Statement plus a published subprocessor list with a
+    notice-of-changes clause.
+  source: https://school.cast.app/security-docs/subprocessors/
+- id: wcag-2.2-aa
+  conforms: true
+  evidence: WCAG 2.2 level AA conformance claimed on the Cast Security Hub.
+  source: https://school.cast.app/security-documents/
+- id: saml-2.0
+  conforms: true
+  evidence: >-
+    Enterprise SAML SSO for the Cast Designer console with Okta, Microsoft Entra ID and
+    Google Workspace.
+  source: https://school.cast.app/sso-setup-guide/
+- id: rest-json
+  conforms: true
+  evidence: Both published APIs are JSON over HTTPS with resource-shaped paths.
+  source: https://school.cast.app/cast-api/
+- id: oauth2
+  conforms: false
+  evidence: >-
+    No OAuth2 anywhere on the API surface. Both APIs use a static API key in the
+    Authorization header.
+- id: openid-connect
+  conforms: false
+  evidence: /.well-known/openid-configuration returns 404 on cast.app.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: No problem+json, no documented error body.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on cast.app.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No deprecation or sunset policy published.
+- id: openapi
+  conforms: false
+  evidence: >-
+    No OpenAPI, Swagger, GraphQL SDL, AsyncAPI or Postman collection published. Every
+    probe of the API host root and the docs host missed; the reference is HTML prose.
+- id: asyncapi
+  conforms: false
+  evidence: >-
+    A real outbound webhook surface exists (Advanced Endpoints) but is documented in
+    prose, with no AsyncAPI or payload schema.
+- id: hsts
+  conforms: false
+  evidence: cast.app serves no Strict-Transport-Security header (probed 2026-08-13).
+- id: dnssec
+  conforms: true
+  evidence: DNSSEC is enabled on cast.app (probed 2026-08-13).
+- id: dmarc
+  conforms: true
+  evidence: DMARC record present, policy p=none (probed 2026-08-13).
+policies_published:
+- Vulnerability and Patch Management Policy
+- Encryption and Key Management Policy
+- Access Control and Termination Policy
+- Data Protection Impact Assessments
+ai_posture:
+  trains_on_customer_data: false
+  statement: >-
+    Cast states it does not use customer data to train or fine-tune models, uses only
+    third-party AI services whose API data is excluded from training, and applies LLM
+    masking. Model-flexible across OpenAI, Anthropic and Google Gemini.
+  source: https://school.cast.app/security-docs/ai-solution/

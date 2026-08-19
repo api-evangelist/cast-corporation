@@ -1,0 +1,182 @@
+generated: '2026-08-13'
+method: derived
+source: https://school.cast.app/cast-api/
+note: >-
+  Entity graph derived from the field tables and example responses published on the Cast
+  Analytics API and In-app Delivery reference pages. Cast ships no OpenAPI, so this is
+  transcribed from documented response payloads rather than from $ref links. Field names
+  and types below appear verbatim in Cast's own examples; nothing is inferred beyond the
+  relationships the identifiers make explicit.
+entities:
+- name: Organization
+  identifier: org_slug
+  alternate_identifier: org_id
+  id_type: slug (string) in URLs, integer org_id in payloads
+  description: >-
+    The tenant. Its slug is embedded in every Analytics API path and is read off the Cast
+    Designer URL.
+  source_field: org_slug / org_id
+- name: Project
+  aliases: [cast]
+  identifier: cast_id
+  id_type: integer
+  description: >-
+    A cast project - the presentation program a campaign is generated from. Called
+    "project" in prose and cast_id in the API.
+  source_field: cast_id
+- name: Campaign
+  aliases: [generation]
+  identifier: id
+  alternate_identifier: generation_id / generate_group
+  id_type: integer id; generation_id is a dated opaque string (e.g. 20240805_UZ7nBjQ...)
+  description: >-
+    One generation run of a project against a contact set. Carries delivery scheduling
+    and per-item counters.
+  fields:
+  - {name: id, type: integer}
+  - {name: org_id, type: integer}
+  - {name: cast_id, type: integer}
+  - {name: name, type: string}
+  - {name: generate_group, type: string}
+  - {name: PROCESSING, type: integer}
+  - {name: FINISHED, type: integer}
+  - {name: FAILED, type: integer}
+  - {name: SKIPPED, type: integer}
+  - {name: TOTAL, type: integer}
+  - {name: error_message, type: string}
+  - {name: status, type: string}
+  - {name: is_archived, type: boolean}
+  - {name: created_at, type: string (ISO 8601)}
+  - {name: delivery_reminders, type: array}
+  - {name: delivery_date, type: string}
+  - {name: scheduled_delivery_id, type: string}
+  - {name: scheduled_delivery_date, type: string}
+  - {name: schedule_delivery_occurred, type: boolean}
+  - {name: condition_data, type: object}
+- name: Contact
+  identifier: contact_id
+  id_type: string (numeric)
+  description: >-
+    A person at a customer account who receives a personalized cast. Carried on every
+    analytics event and required by the permalink endpoint.
+  fields:
+  - {name: contact_id, type: string}
+  - {name: contact_email, type: string}
+  - {name: contact_name, type: string}
+  - {name: contact_phone, type: string}
+  - {name: status, type: string}
+- name: AnalyticsEvent
+  identifier: null
+  description: >-
+    One engagement event emitted as a contact receives, opens, plays or acts on a cast.
+  fields:
+  - {name: event_at, type: string (ISO 8601)}
+  - {name: event_type, type: enum, values: [delivered, view, play, action, feedback]}
+  - {name: ip_address, type: string}
+  - {name: device_type, type: string}
+  - {name: os_name, type: string}
+  - {name: browser_name, type: string}
+- name: AnalyticsSummary
+  identifier: null
+  description: Aggregated counters and a time series for one campaign.
+  fields:
+  - {name: unique_view, type: integer}
+  - {name: unique_play, type: integer}
+  - {name: unique_action, type: integer}
+  - {name: unique_feedback, type: integer}
+  - {name: total_view, type: integer}
+  - {name: total_play, type: integer}
+  - {name: total_action, type: integer}
+  - {name: total_feedback, type: integer}
+  - {name: timeline, type: object}
+  - {name: scenes_watched, type: array}
+  - {name: actions_clicked, type: array}
+  - {name: feedbacks, type: array}
+  - {name: user_agents, type: object}
+  - {name: languages, type: object}
+- name: CrossCampaignSummary
+  identifier: null
+  description: >-
+    Map keyed by campaign generation id, each value a counter object. Totals are computed
+    client-side by summing the map.
+  fields:
+  - {name: loadTime, type: integer, meaning: number of views}
+  - {name: play, type: integer}
+  - {name: 'click.action', type: integer}
+  - {name: feedback, type: integer}
+  - {name: email_delivered, type: integer}
+- name: Permalink
+  identifier: null
+  description: >-
+    A personalized presentation URL minted for one contact in one project, in a given
+    mode.
+  fields:
+  - {name: cast_id, type: integer}
+  - {name: contact_id, type: string}
+  - {name: mode, type: enum, values: [play, ama, information, page]}
+- name: NavigationPath
+  identifier: startPoint
+  id_type: string
+  description: >-
+    A named section of a presentation. Its ID can be passed as startPoint to deep-link an
+    embed into that section.
+  source: https://school.cast.app/projects/campaigns-and-analytics/in-app-delivery/
+relationships:
+- from: Project
+  to: Organization
+  type: belongs_to
+  via: org_id
+- from: Campaign
+  to: Project
+  type: belongs_to
+  via: cast_id
+- from: Campaign
+  to: Organization
+  type: belongs_to
+  via: org_id
+- from: Project
+  to: Campaign
+  type: has_many
+  via: cast_id
+- from: Campaign
+  to: AnalyticsEvent
+  type: has_many
+  via: generation_id
+- from: AnalyticsEvent
+  to: Contact
+  type: belongs_to
+  via: contact_id
+- from: Campaign
+  to: AnalyticsSummary
+  type: has_one
+  via: generation_id
+- from: Project
+  to: CrossCampaignSummary
+  type: has_one
+  via: cast_id
+- from: Permalink
+  to: Project
+  type: belongs_to
+  via: cast_id
+- from: Permalink
+  to: Contact
+  type: belongs_to
+  via: contact_id
+- from: Project
+  to: NavigationPath
+  type: has_many
+  via: startPoint
+id_conventions:
+- entity: Campaign
+  pattern: 'YYYYMMDD_<22-char base62>'
+  example: 20240805_UZ7nBjQLwss863cw7YSr5B
+  note: >-
+    The generation_id is date-prefixed, so campaign ids sort chronologically. Distinct
+    from the integer campaign id returned in the campaign list.
+- entity: Organization
+  pattern: short opaque slug or human-readable slug
+  examples: [45ac8dse, 46ca7ead, acme-corp, about-cast]
+gaps:
+- No entity for accounts (companies) is exposed by the API - only contacts.
+- No documented endpoint returns projects; cast_id must be read off the Designer URL.
+- No schema document; every type above is transcribed from prose and examples.
