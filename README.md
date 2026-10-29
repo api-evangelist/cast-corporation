@@ -64,36 +64,122 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Cast Corporation (Cast.app) is an AI-agent platform that automates customer success and post-sales
-revenue operations for B2B technology companies. This profile covers the two REST surfaces Cast
-publicly documents:
+Cast Corporation (Cast.app) is an AI-agent platform that automates customer success and post-sales revenue operations for B2B SaaS and technology companies. Its autonomous "digital CSM" agents deliver personalized business reviews, grounded answers, onboarding, usage adoption, churn reduction, renewal influence, and referral workflows across email, in-app, and chat in 17 languages. Cast positions itself as an autopilot layer over an existing stack, connecting natively to 60+ systems including Salesforce, HubSpot, Gainsight, Totango, and data warehouses, with customers such as Pure Storage, HPE, and Aruba Networks. Backed by Techstars, Array Ventures, Soma Capital, New York Venture Partners, Leonis Capital, and Comcast NBCUniversal LiftLabs. Cast publishes two documented REST surfaces: a Cast Analytics API for exporting campaign engagement events and summaries, and an In-app Delivery API plus embeddable loader for minting personalized presentation permalinks inside a customer's own web app. Both are documented in prose only — Cast publishes no OpenAPI, AsyncAPI, GraphQL SDL, or Postman collection.
 
-- **[Cast Analytics API](https://school.cast.app/cast-api/)** — read-only export of campaign
-  engagement summaries, paged engagement events, the campaign list for a project, and a
-  cross-campaign rollup. Base: `https://cast.app/designer/{org_slug}/api`.
-- **[Cast In-app Delivery API](https://school.cast.app/projects/campaigns-and-analytics/in-app-delivery/)**
-  — `POST /designer/api/v1/permalink` mints a personalized presentation link for one contact, paired
-  with the `cast-inapp-loader.js` embeddable launcher / iframe / link components and a first-party
-  [React example](https://github.com/cast-corp/delivery-react-example).
+**Areas:** Company · Customer Success · Artificial Intelligence · AI Agents · Revenue Operations · Software-as-a-Service · Automation · Post-Sales · Analytics · Webhook · Embeddable
 
-### Not published by Cast
+## Cast Corporation on APIs.io
 
-Recorded so absence reads as deliberate rather than unexamined. Probed 2026-08-13:
+Everything profiled for Cast Corporation is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/cast-corporation/](https://apis.io/providers/cast-corporation/)** — or go straight to one of the APIs or properties below.
 
-- **No machine-readable specification.** No OpenAPI, Swagger, GraphQL SDL, AsyncAPI, JSON Schema or
-  Postman collection on the API host, the docs host, or the GitHub org. Both APIs are documented in
-  HTML prose only.
-- **No `/.well-known/` surface.** `security.txt`, `openid-configuration`, `oauth-authorization-server`,
-  `oauth-protected-resource`, `api-catalog`, `ai-plugin.json`, `agent-card.json` and `agent.json` all
-  return 404 on `cast.app` and `school.cast.app`.
-- **No MCP server and no A2A agent card.** Cast's own `llms.txt` says the platform "supports open
-  agent protocols including MCP, A2A, ACP" — that is what Cast's agents consume, not a server or card
-  a client can reach.
-- **No status page, no deprecation policy, no changelog, no published rate limits, no SDK on any
-  package registry.** Cast does commit to a 99.9% uptime SLA with severity-banded response times.
+### APIs (2)
 
-Cast **does** publish a substantial first-party `llms.txt` (13KB, self-dated 2026-08-11), captured
-verbatim in `llms/`.
+- [Cast Analytics API](https://apis.io/apis/cast-corporation/cast-analytics-api/) — Read-only REST API for exporting Cast.app campaign performance data — per-campaign engagement summaries, paged engagement events (delivered / view / play /…
+- [Cast In-app Delivery API](https://apis.io/apis/cast-corporation/cast-in-app-delivery-api/) — Server-side endpoint for minting a personalized Cast presentation permalink for one contact in one project, in play (automated presentation), ama (Ask Me…
 
-Backed by: Techstars, Array Ventures, Soma Capital, New York Venture Partners, Leonis Capital,
-Comcast NBCUniversal LiftLabs — https://cast.app/
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Cast Corporation Webhooks](https://apis.io/asyncapis/cast-corporation/cast-corporation-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [cast-corporation](https://apis.io/servers/cast-corporation/cast-corporation/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Cast Corporation Authentication](https://apis.io/security/cast-corporation/cast-corporation-authentication/)
+- [Cast Corporation Domain Security](https://apis.io/security/cast-corporation/cast-corporation-domain-security/)
+- [Cast Corporation Trust Center](https://apis.io/security/cast-corporation/cast-corporation-trust-center/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Cast Corporation Plans Pricing](https://apis.io/plans/cast-corporation/cast-corporation-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Cast Corporation Rate Limits](https://apis.io/rate-limits/cast-corporation/cast-corporation-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://cast.app/)
+- [Documentation](https://school.cast.app/)
+- [Getting started](https://school.cast.app/getting-started/)
+- [API reference](https://school.cast.app/cast-api/)
+- [Pricing](https://cast.app/pricing.html)
+- [Sign up](https://cast.app/designer/login)
+- [Blog](https://cast.app/articles.html)
+- [Compliance](https://school.cast.app/security-documents/)
+- [Trust centre](https://school.cast.app/security-documents/)
+- [Terms of service](https://cast.app/terms-and-conditions.html)
+- [GitHub](https://github.com/cast-corp)
+
+## API Evangelist rating
+
+**Kin Score 48.5** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 39.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 61.9 |
+| Access clarity | 71.1 |
+
+**Agent readiness 25.2** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 23.6** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/cast-corporation/](https://apis.io/providers/cast-corporation/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Cast Corporation: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/cast-corporation/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
